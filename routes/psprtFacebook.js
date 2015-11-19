@@ -19,20 +19,12 @@ router.get('/',
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-router.get('/',
+router.get('/callback',
     psprt.authenticate('facebook', {failureRedirect: '/login'}),
     function (req, res) {
         // Successful authentication, redirect home.
-        res.redirect('/');
+        res.redirect('/users');
+        //TODO: redirect to app or if not login - redirect to login from app page
     });
-
-router.get('/', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
-router.get('/test', function(req, res, next) {
-    res.send('respond with a resource');
-});
 
 module.exports = router;

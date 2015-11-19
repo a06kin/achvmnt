@@ -11,7 +11,8 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var psprtConf = require('./routes/psprt');
+var psprtConf = require('./routes/psprtFacebook');
+var logout = require('./routes/logout');
 
 var User = require('./models/User');
 
@@ -64,10 +65,10 @@ psprt.use(new FacebookStrategy({
                     "displayName": profile.displayName
                 });
                 user.save(function (err) {
-                    if (!err) console.log('Success!');
+                    if (err) done(err, null);
                 });
             }
-            return done(err, user);
+            return done(null, user);
         });
     }
 ));
@@ -87,8 +88,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.use('/auth/facebook', psprtConf);
-app.use('/auth/facebook/callback', psprtConf);
-app.use('/logout', psprtConf);
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
