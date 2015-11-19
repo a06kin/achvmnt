@@ -13,6 +13,8 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var psprtConf = require('./routes/psprt');
 
+var User = require('./models/User');
+
 var psprt = require('passport');
 
 var FacebookStrategy = require('passport-facebook').Strategy;
@@ -51,12 +53,20 @@ psprt.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,
         callbackURL: "http://localhost:3000/auth/facebook/callback",
-        enableProof: false
+        enableProof: false,
+        profileFields: ['id', 'displayName', 'picture']
     },
     function (accessToken, refreshToken, profile, done) {
-        //TODO: save in DB & return obj
-        //TODO: look what is in profile
-        User.findOrCreate({facebookId: profile.id}, function (err, user) {
+        User.findOne({'id': profile.id}, function (err, user) {
+            if(user === null){
+                user = new User({
+                    "id": profile.id,
+                    "displayName": profile.displayName
+                });
+                user.save(function (err) {
+                    if (!err) console.log('Success!');
+                });
+            }
             return done(err, user);
         });
     }
