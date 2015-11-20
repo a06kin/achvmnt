@@ -1,0 +1,40 @@
+script(type='text/javascript').
+    if (window.location.hash && window.location.hash == '#_=_') {
+        if (window.history && history.pushState) {
+            window.history.pushState("", document.title, window.location.pathname);
+        } else {
+            // Prevent scrolling by storing the page's current scroll offset
+            var scroll = {
+                top: document.body.scrollTop,
+                left: document.body.scrollLeft
+            };
+            window.location.hash = '';
+            // Restore the scroll offset, should be flicker free
+            document.body.scrollTop = scroll.top;
+            document.body.scrollLeft = scroll.left;
+        }
+    }
+
+extends layout
+
+block content
+
+    .section-first
+        .container
+            .row
+                .eight.columns
+                    h1 Achvmn{
+                .four.columns
+                    h3.u-pull-right #{username}
+    .section
+        .container
+            .row
+                .nine.columns
+                    h5 Your completed achvmn{s
+                .three.columns
+                    a.u-pull-right.button(href='newAchvmnt') new achvmn{
+            .row
+                .two.columns
+                    img.u-max-full-width(src='https://placehold.it/100x100')
+                .two.columns
+                    img.u-max-full-width(src='https://placehold.it/100x100')
