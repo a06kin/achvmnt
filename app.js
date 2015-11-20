@@ -37,17 +37,14 @@ app.use(function (req, res, next) {
     next();
 });
 
-//TODO: understand wtf is done
 psprt.serializeUser(function (user, done) {
-    done(null, user);
+    done(null, user.id);
 });
 
-psprt.deserializeUser(function (obj, done) {
-    done(null, obj);
-    //TODO: reserialize
-    //User.findById(id, function(err, user) {
-    //    done(err, user);
-    //});
+psprt.deserializeUser(function (id, done) {
+    User.findOne({'id': id}, function(err, user) {
+        done(err, user);
+    });
 });
 
 psprt.use(new FacebookStrategy({
@@ -59,13 +56,13 @@ psprt.use(new FacebookStrategy({
     },
     function (accessToken, refreshToken, profile, done) {
         User.findOne({'id': profile.id}, function (err, user) {
-            if(user === null){
+            if (user === null) {
                 user = new User({
                     "id": profile.id,
                     "displayName": profile.displayName
                 });
                 user.save(function (err) {
-                    if (err){
+                    if (err) {
                         done(err, null);
                     }
                 });
@@ -81,6 +78,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(session({
+    secret: 'qwedfsv;fmdbpq23vw-r0ag4TQ#GH%REBAR$TQ#%YW^UE&*RKIYmunrht46wu5ejynorvw[ec',
+    saveUninitialized: true,
+    resave: true
+}));
 app.use(psprt.initialize());
 app.use(psprt.session());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
