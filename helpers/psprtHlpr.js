@@ -5,7 +5,6 @@ var exports = module.exports = {};
 //   the request is authenticated (typically via a persistent login session),
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
-//TODO: USE THIS!!!!
 exports.ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
