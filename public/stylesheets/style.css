@@ -7,3 +7,13 @@ a {
 .section {
   padding: 0 0 6rem;
 }
+#profilePics {
+  height: 50px;
+  width: 50px;
+}
+#profilePics img {
+  border-radius: 4px;
+}
+.hidden {
+  display: none;
+}

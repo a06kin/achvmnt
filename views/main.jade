@@ -8,19 +8,54 @@ block content
                 .one-half.column
                     h1 Achvmn{
                 .one-half.column
+                    //div.u-pull-right#profilePics
+                    //    img.u-max-full-width(src='#{user.picture}')
                     h4.u-pull-right #{user.displayName}
+
             .row
                 .twelve.columns
-                    a.u-pull-right.button(href='logout') logout
+                    //a.u-pull-right.button(href='logout') logout
     .section
         .container
             .row
                 .nine.columns
                     h5 Your completed achvmn{s
                 .three.columns
-                    a.u-pull-right.button(href='newAchvmnt') new achvmn{
+                    button.u-pull-right(onclick='newAchvmntF();false') new achvmn{
+            form.hidden#newAchvmnt
+                .row
+                    .six.columns.u-pull-right
+                        label(for='newAchvmntName') Name
+                        input#newAchvmntName.u-full-width(type='text', placeholder='I did a great job. Gimme cookie.')
+                .row
+                    .six.columns.u-pull-right
+                        label(for='image') Image
+                        input#image.u-full-width(type='file' name='pic' accept='image/*')
+                .row
+                    .six.columns.u-pull-right
+                        label(for='circumscribing') Circumscribing
+                        textarea#circumscribing.u-full-width(placeholder='I eat a cookie...')
+
+
             .row
                 .two.columns
                     img.u-max-full-width(src='https://placehold.it/100x100')
                 .two.columns
                     img.u-max-full-width(src='https://placehold.it/100x100')
+
+    script(type='text/javascript').
+        function newAchvmntF() {
+            //TODO: bring completedachievemnt to left (ex.: six columns)
+            el = document.querySelectorAll('#newAchvmnt')[0];
+            if(el.classList.contains('hidden')){
+                el.classList.remove('hidden');
+                el.classList.add('animated');
+                el.classList.add('fadeIn');
+            }else{
+                el.classList.add('hidden');
+                el.classList.remove('animated');
+                el.classList.remove('fadeIn');
+            }
+
+
+        }
