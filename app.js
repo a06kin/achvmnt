@@ -10,7 +10,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var main = require('./routes/main');
 var psprtConf = require('./routes/psprtFacebook');
 var logout = require('./routes/logout');
 
@@ -20,8 +20,8 @@ var psprt = require('passport');
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 
-var FACEBOOK_APP_ID = "";
-var FACEBOOK_APP_SECRET = "";//TODO: in environment vars
+var FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+var FACEBOOK_APP_SECRET = process.env.FACEBOOK_APP_SECRET;
 
 var app = express();
 
@@ -65,7 +65,9 @@ psprt.use(new FacebookStrategy({
                     "displayName": profile.displayName
                 });
                 user.save(function (err) {
-                    if (err) done(err, null);
+                    if (err){
+                        done(err, null);
+                    }
                 });
             }
             return done(null, user);
@@ -85,7 +87,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/main', main);
 
 app.use('/auth/facebook', psprtConf);
 app.use('/logout', logout);
