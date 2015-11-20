@@ -53,14 +53,15 @@ psprt.use(new FacebookStrategy({
         clientSecret: FACEBOOK_APP_SECRET,
         callbackURL: 'http://localhost:3000/auth/facebook/callback',
         enableProof: false,
-        profileFields: ['id', 'displayName', 'picture']
+        profileFields: ['id', 'displayName', 'picture.type(large)']
     },
     function (accessToken, refreshToken, profile, done) {
         User.findOne({'id': profile.id}, function (err, user) {
             if (user === null) {
                 user = new User({
                     'id': profile.id,
-                    'displayName': profile.displayName
+                    'displayName': profile.displayName,
+                    'picture': profile.photos.pop().value
                 });
                 user.save(function (err) {
                     if (err) {
