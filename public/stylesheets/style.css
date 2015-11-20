@@ -1,7 +1,9 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
 a {
   color: #00b7ff;
+}
+.section-first {
+  padding: 3rem 0 3rem;
+}
+.section {
+  padding: 0 0 6rem;
 }
