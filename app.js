@@ -12,6 +12,7 @@ var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var main = require('./routes/main');
 var psprtConf = require('./routes/psprtFacebook');
+var psprtHlpr = require('./helpers/psprtHlpr');
 var logout = require('./routes/logout');
 
 var User = require('./models/User');
@@ -50,7 +51,7 @@ psprt.deserializeUser(function (id, done) {
 psprt.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,
-        callbackURL: "http://localhost:3000/auth/facebook/callback",
+        callbackURL: 'http://localhost:3000/auth/facebook/callback',
         enableProof: false,
         profileFields: ['id', 'displayName', 'picture']
     },
@@ -58,8 +59,8 @@ psprt.use(new FacebookStrategy({
         User.findOne({'id': profile.id}, function (err, user) {
             if (user === null) {
                 user = new User({
-                    "id": profile.id,
-                    "displayName": profile.displayName
+                    'id': profile.id,
+                    'displayName': profile.displayName
                 });
                 user.save(function (err) {
                     if (err) {
@@ -89,10 +90,10 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/main', main);
+app.use('/main',psprtHlpr.ensureAuthenticated, main);
 
 app.use('/auth/facebook', psprtConf);
-app.use('/logout', logout);
+app.use('/logout',psprtHlpr.ensureAuthenticated, logout);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
