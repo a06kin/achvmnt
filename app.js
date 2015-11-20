@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var main = require('./routes/main');
+var achvmnts = require('./routes/achvmnt');
 var psprtConf = require('./routes/psprtFacebook');
 var psprtHlpr = require('./helpers/psprtHlpr');
 var logout = require('./routes/logout');
@@ -95,6 +96,8 @@ app.use('/main',psprtHlpr.ensureAuthenticated, main);
 
 app.use('/auth/facebook', psprtConf);
 app.use('/logout',psprtHlpr.ensureAuthenticated, logout);
+
+app.use('/achvmnts',psprtHlpr.ensureAuthenticated, achvmnts);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

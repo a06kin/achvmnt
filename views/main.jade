@@ -22,19 +22,20 @@ block content
                     h5 Your completed achvmn{s
                 .three.columns
                     button.u-pull-right(onclick='newAchvmntF();false') new achvmn{
-            form.hidden#newAchvmnt
+            form.hidden#newAchvmnt(action='achvmnts/new', method='post')
                 .row
                     .six.columns.u-pull-right
-                        label(for='newAchvmntName') Name
-                        input#newAchvmntName.u-full-width(type='text', placeholder='I did a great job. Gimme cookie.')
+                        label(for='name') Name
+                        input#name.u-full-width(type='text', placeholder='I did a great job. Gimme cookie.', name='name')
                 .row
                     .six.columns.u-pull-right
                         label(for='image') Image
-                        input#image.u-full-width(type='file' name='pic' accept='image/*')
+                        input#image.u-full-width(type='file', accept='image/*', name='image')
                 .row
                     .six.columns.u-pull-right
                         label(for='circumscribing') Circumscribing
-                        textarea#circumscribing.u-full-width(placeholder='I eat a cookie...')
+                        textarea#circumscribing.u-full-width(placeholder='I eat a cookie...', name='circumscribing')
+                input.button-primary.u-pull-right(type='submit' value="Submit")
 
 
             .row
@@ -56,6 +57,4 @@ block content
                 el.classList.remove('animated');
                 el.classList.remove('fadeIn');
             }
-
-
         }
