@@ -22,7 +22,7 @@ block content
                     h5 Your completed achvmn{s
                 .three.columns
                     button.u-pull-right(onclick='newAchvmntF();false') new achvmn{
-            form.hidden#newAchvmnt(action='achvmnts/new', method='post')
+            form.hidden#newAchvmnt(action='achvmnts/new', method='post', enctype="multipart/form-data")
                 .row
                     .six.columns.u-pull-right
                         label(for='name') Name

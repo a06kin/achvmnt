@@ -3,6 +3,8 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
+    console.log(req.files);
+    console.log(req.file);
     res.render('main', { user: req.user });
 });
 

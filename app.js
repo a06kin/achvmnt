@@ -9,6 +9,8 @@ var session = require('express-session');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
+var multer  = require('multer');
+
 var routes = require('./routes/index');
 var main = require('./routes/main');
 var achvmnts = require('./routes/achvmnt');
@@ -38,6 +40,8 @@ app.use(function (req, res, next) {
     req.db = db;
     next();
 });
+
+app.use(multer({dest:'./uploads/'}).single('image'));
 
 psprt.serializeUser(function (user, done) {
     done(null, user.id);
