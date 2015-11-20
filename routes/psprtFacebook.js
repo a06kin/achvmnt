@@ -23,7 +23,7 @@ router.get('/callback',
     psprt.authenticate('facebook', {failureRedirect: '/login'}),
     function (req, res) {
         // Successful authentication, redirect home.
-        res.redirect('/users');
+        res.redirect('/main');
         //TODO: redirect to app or if not login - redirect to login from app page
     });
 
